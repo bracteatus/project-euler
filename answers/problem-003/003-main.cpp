@@ -2,14 +2,15 @@
 int main (void) {
   long long const target{600851475143ll};
 
-  long long primes[62113] = { 0 };
+  // 1. find primes less than sqrt(target)
+  // 2. calculate largest prime factor
 
-  // find primes less than sqrt(target)
+  long long product{1ll};
+  long long largest_factor{};
 
   long long x{2ll};
-  primes[0] = 2;
   bool is_x_prime{true};
-  for (int i{1}; i < 62114; ) {
+  for (int i{1}; i < 62114 && product != target; ) {
     ++x;
 
     is_x_prime = true;
@@ -22,19 +23,12 @@ int main (void) {
     }
 
     if (is_x_prime) {
-      primes[i] = x;
+      if (!(target % x)) {
+	largest_factor = x;
+	product *= largest_factor;
+      }
+
       ++i;
-    }
-  }
-
-  // calculate largest prime factor
-
-  long long product{1ll};
-  long long largest_factor{};
-  for (int i{}; i < 62113 && product != target; ++i) {
-    if (!(target % primes[i])) {
-      largest_factor = primes[i];
-      product *= largest_factor;
     }
   }
 
